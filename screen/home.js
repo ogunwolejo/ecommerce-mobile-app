@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
+
 export default HomeScreen = ({navigation}) => {
     const {colors} = useTheme();
     return (

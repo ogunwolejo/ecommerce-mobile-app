@@ -4,8 +4,12 @@ import * as splashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { Provider as PaperProvider } from "react-native-paper";
+import { Provider as PaperProvider, useTheme, Text, Badge } from "react-native-paper";
 import theme from "./theme";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+
 
 // imports of screens
 import Login from "./screen/auth/login";
@@ -18,18 +22,58 @@ const ROOT_STACK = createNativeStackNavigator();
 const TAB_STACK = createMaterialBottomTabNavigator();
 
 function TabNavigation() {
+  const {colors} = useTheme();
+  const cartItems = React.useState(0);
+
   return (
     <TAB_STACK.Navigator
-      shifting={false}
+      shifting={true}
       backBehavior="initialRoute"
       initialRouteName="home"
-      activeColor="#e91e63"
-      inactiveColor="#3e2465"
-      barStyle={{ backgroundColor: "#694fad" }}
+      activeColor={colors.primary}
+      inactiveColor={colors.onSecondary}
+      barStyle={{ backgroundColor: colors.background, borderTopWidth:1, borderTopColor:colors.onSecondary }}      
     >
-      <TAB_STACK.Screen name="home" component={Home} />
-      <TAB_STACK.Screen name="home1" component={Home} />
-      <TAB_STACK.Screen name="home2" component={Home} />
+      <TAB_STACK.Screen name="home" component={Home} options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home-outline" color={color} size={24} />
+          ),
+          tabBarActiveTintColor:colors.primary,
+          tabBarInactiveTintColor:colors.onSecondary
+        }}/>
+      <TAB_STACK.Screen name="explore" component={Home} options={{
+          tabBarLabel: 'Search',
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="search-outline" color={color} size={24} />
+          ),
+          tabBarActiveTintColor:colors.primary,
+          tabBarInactiveTintColor:colors.onSecondary
+        }} />
+      <TAB_STACK.Screen name="cart" component={Home} options={{
+          tabBarLabel: 'Cart',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="cart-outline" color={color} size={24} />
+          ),
+          tabBarActiveTintColor:colors.primary,
+          tabBarInactiveTintColor:colors.onSecondary
+        }}/>
+        <TAB_STACK.Screen name="offer" component={Home} options={{
+          tabBarLabel: 'Offer',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="tag-outline" color={color} size={24} />
+          ),
+          tabBarActiveTintColor:colors.primary,
+        tabBarInactiveTintColor:colors.onSecondary
+        }}/>
+        <TAB_STACK.Screen name="account" component={Home} options={{
+          tabBarLabel: 'Account',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account-outline" color={color} size={24} />
+          ),
+          tabBarActiveTintColor:colors.primary,
+        tabBarInactiveTintColor:colors.onSecondary
+        }}/>
     </TAB_STACK.Navigator>
   );
 }
